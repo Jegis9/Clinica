@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Control Prenatal - Las Marías</title>
+    <style>
+        :root {
+            --primary: #2E7D32; /* Verde más profesional */
+            --secondary: #FFA000; /* Naranja cálido */
+            --accent: #0288D1; /* Azul confiable */
+            --light: #F5F5F5;
+            --white: #FFFFFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+
+background: #803ae8;
+background: radial-gradient(circle,rgba(128, 58, 232, 1) 0%, rgba(75, 75, 222, 1) 19%, rgba(157, 193, 235, 1) 100%);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo i {
+            font-size: 3rem;
+            color: rgb(0, 81, 255);
+        }
+        
+        h1 {
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            font-size: 4rem;
+        }
+        
+        .subtitle {
+            color: #aaa8a8;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .login-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2.5rem;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        
+        .login-card h2 {
+            color: rgb(56, 114, 240);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .btn {
+            background-color: #4B4BDE;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #1d92b6;
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #000000;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .login-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                
+                <i class="fa-solid fa-baby"></i>
+            </div>
+            <h1>Materno 360</h1>
+            <p class="subtitle">Sistema de Control Prenatal</p>
+        </div>
+        
+        <div class="login-card">
+            <h2>Acceso al Sistema</h2>
+    <a href="/admin/login">
+        <button class="btn">Ir al Inicio de sesion</button>
+    </a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2025 Universidad Mariano Galvez</p>
+    </div>
+</body>
+</html>
