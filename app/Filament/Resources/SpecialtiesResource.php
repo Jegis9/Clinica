@@ -17,8 +17,11 @@ use Filament\Tables\Columns\IconColumn;
 class SpecialtiesResource extends Resource
 {
     protected static ?string $model = Specialties::class;
+    protected static ?string $modelLabel = 'Especialidad';  // Singular
+    protected static ?string $pluralModelLabel = 'Especialidades';  // Plural
+    protected static ?string $navigationLabel = 'Especialidades';  // Navbar
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-beaker';
 
     public static function form(Form $form): Form
     {
