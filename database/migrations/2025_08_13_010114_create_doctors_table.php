@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medical_histories', function (Blueprint $table) {
+        Schema::create('doctors', function (Blueprint $table) {
             $table->id();
+            $table->string('dpi')->unique();
+            $table->string('name');
+            $table->string('lastname');
+            $table->string('phone')->nullable();
+            $table->string('email')->unique();
+            $table->enum('status', ['active', 'desactive'])->default('active');
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medical_histories');
+        Schema::dropIfExists('doctors');
     }
 };
