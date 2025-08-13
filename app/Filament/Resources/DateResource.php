@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\HistoriesResource\Pages;
-use App\Filament\Resources\HistoriesResource\RelationManagers;
-use App\Models\Histories;
+use App\Filament\Resources\DateResource\Pages;
+use App\Filament\Resources\DateResource\RelationManagers;
+use App\Models\Date;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,14 +13,15 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class HistoriesResource extends Resource
+class DateResource extends Resource
 {
-    protected static ?string $model = Histories::class;
-    protected static ?string $modelLabel = 'Historia clinica';  // Singular
-    protected static ?string $pluralModelLabel = 'Historias clinicas';  // Plural
-    protected static ?string $navigationLabel = 'Historia clinica';  // Navbar
+    protected static ?string $model = Date::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
+    protected static ?string $modelLabel = 'Cita medica';  // Singular
+    protected static ?string $pluralModelLabel = 'Citas medicas';  // Plural
+    protected static ?string $navigationLabel = 'Cita medica';  // Navbar
+
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -28,25 +29,21 @@ class HistoriesResource extends Resource
             ->schema([
                 Forms\Components\Select::make('patient_id')
                     ->label('Paciente')
-                    ->relationship('patient', 'first_name') // Asegúrate que 'patient' sea el nombre de la relación
+                    ->relationship('patient', 'first_name')
                     ->required(),
-
-                Forms\Components\DateTimePicker::make('date_consulting') // Cambiado a coincidir con migración
-                    ->label('Fecha de Consulta')
-                    ->required(),
-
                 Forms\Components\Select::make('doctor_id')
                     ->label('Médico')
-                    ->relationship('doctor', 'name') // Asegúrate que 'doctor' sea el nombre de la relación
+                    ->relationship('doctor', 'name')
                     ->required(),
-                                
-                Forms\Components\Textarea::make('diagnostic') // Cambiado a coincidir con migración
-                    ->label('Diagnóstico')
+                Forms\Components\DateTimePicker::make('date')
+                    ->label('Fecha de la cita')
                     ->required(),
-
-                Forms\Components\Textarea::make('treatment') // Cambiado a coincidir con migración
-                    ->label('Tratamiento')
+                Forms\Components\Textarea::make('reason')
+                    ->label('Motivo')
                     ->required(),
+                Forms\Components\Textarea::make('notes')
+                    ->label('Notas')
+                    ->nullable(),
             ]);
     }
 
@@ -56,11 +53,10 @@ class HistoriesResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
                 Tables\Columns\TextColumn::make('patient.first_name')->label('Paciente')->searchable(),
-                Tables\Columns\TextColumn::make('date_consulting')->label('Fecha de Consulta')->dateTime()->sortable(),
                 Tables\Columns\TextColumn::make('doctor.name')->label('Médico')->searchable(),
-                Tables\Columns\TextColumn::make('diagnostic')->label('Diagnóstico')->limit(30),
-                
-
+                Tables\Columns\TextColumn::make('date')->label('Fecha de la cita')->dateTime()->sortable(),
+                Tables\Columns\TextColumn::make('reason')->label('Motivo')->limit(30),
+        
             ])
             ->filters([
                 //
@@ -87,9 +83,9 @@ class HistoriesResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListHistories::route('/'),
-            'create' => Pages\CreateHistories::route('/create'),
-            'edit' => Pages\EditHistories::route('/{record}/edit'),
+            'index' => Pages\ListDates::route('/'),
+            'create' => Pages\CreateDate::route('/create'),
+            'edit' => Pages\EditDate::route('/{record}/edit'),
         ];
     }
 }

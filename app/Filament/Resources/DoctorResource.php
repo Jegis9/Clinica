@@ -21,7 +21,7 @@ class DoctorResource extends Resource
     protected static ?string $pluralModelLabel = 'Doctores';  // Plural
 
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
     public static function form(Form $form): Form
     {
