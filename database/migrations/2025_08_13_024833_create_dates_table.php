@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('doctor_id');
             $table->dateTime('date');
             $table->text('reason');
+            $table->enum('status', ['Programada', 'Confirmada', 'Completada', 'Cancelada', 'No asistió'])->default('Programada');
             $table->text('notes')->nullable();
             $table->timestamps();
 

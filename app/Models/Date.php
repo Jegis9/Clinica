@@ -26,6 +26,7 @@ public function doctor()
         'doctor_id',
         'date',
         'reason',
+        'status',
         'notes',
 
       

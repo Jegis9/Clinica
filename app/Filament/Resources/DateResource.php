@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\IconColumn;
 
 class DateResource extends Resource
 {
@@ -41,9 +42,19 @@ class DateResource extends Resource
                 Forms\Components\Textarea::make('reason')
                     ->label('Motivo')
                     ->required(),
+                Forms\Components\Select::make('status')
+                    ->label('Status')
+                    ->options([
+                        'Programada'=> 'Programada',
+                        'Confirmada'=> 'Confirmada',
+                        'Completada'=> 'Completada',
+                        'Cancelada'=> 'Cancelada',
+                        'No asistió'=> 'No asistió',
+                    ]),
                 Forms\Components\Textarea::make('notes')
                     ->label('Notas')
                     ->nullable(),
+
             ]);
     }
 
@@ -56,6 +67,24 @@ class DateResource extends Resource
                 Tables\Columns\TextColumn::make('doctor.name')->label('Médico')->searchable(),
                 Tables\Columns\TextColumn::make('date')->label('Fecha de la cita')->dateTime()->sortable(),
                 Tables\Columns\TextColumn::make('reason')->label('Motivo')->limit(30),
+                IconColumn::make('status')
+                    ->label('Estado')
+                    ->icon(fn (string $state): string => match ($state) {
+                        'Programada' => 'heroicon-o-clock',
+                        'Confirmada' => 'heroicon-o-check-circle',
+                        'Completada' => 'heroicon-o-check-badge',
+                        'Cancelada' => 'heroicon-o-x-circle',
+                        'No asistió' => 'heroicon-o-user-minus',
+                        default => 'heroicon-o-question-mark-circle',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'Programada' => 'info',
+                        'Confirmada' => 'success',
+                        'Completada' => 'primary',
+                        'Cancelada' => 'danger',
+                        'No asistió' => 'warning',
+                        default => 'gray',
+                    })
         
             ])
             ->filters([
@@ -63,7 +92,7 @@ class DateResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+           
                 Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
