@@ -21,26 +21,7 @@ class RiskReports extends Page implements Tables\Contracts\HasTable
     {
         return $table
             ->query(
-                ObstetricRisk::query()->where(function ($q) {
-                    $q->where('previous_fetal_death', true)
-                      ->orWhere('recurrent_abortions', true)
-                      ->orWhere('multigravida', true)
-                      ->orWhere('previous_low_weight', true)
-                      ->orWhere('previous_macrosomia', true)
-                      ->orWhere('hypertension_history', true)
-                      ->orWhere('previous_cesarean', true)
-                      ->orWhere('previous_surgeries', true)
-                      ->orWhere('multiple_pregnancy', true)
-                      ->orWhere('age_under20', true)
-                      ->orWhere('age_35plus', true)
-                      ->orWhere('anemia', true)
-                      ->orWhere('malnutrition', true)
-                      ->orWhere('abdominal_pain', true)
-                      ->orWhere('urinary_symptoms', true)
-                      ->orWhere('jaundice', true)
-                      ->orWhere('hiv_syphilis_positive', true)
-                      ->orWhere('hypertension_current', true);
-                })->with(['prenatalControl.pregnancy.patient']) // Carga las relaciones
+ 
             )
             ->columns([
 

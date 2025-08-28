@@ -21,12 +21,7 @@ class StatsOverview extends BaseWidget
                 ->chart([7, 2, 10, 3, 15, 4, 17])
                 ->color('success'),
                 
-            Stat::make('Pacientes Registrados', Patient::count())
-                ->icon('heroicon-o-user-group')
-                ->description('Total de pacientes')
-                ->chart([1, 5, 3, 8, 12, 5, 15])
-                ->color('primary'),
-                
+
 
 
                 
