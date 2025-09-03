@@ -12,25 +12,31 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
 
-class ControlResource extends Resource
+class ControlResource extends Resource 
 {
     protected static ?string $model = Control::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-
+                // Campo hidden para antecedente_id
                 Forms\Components\Hidden::make('antecedente_id')
                     ->default(fn () => request()->get('antecedente_id'))
                     ->required(),
-                Forms\Components\TextInput::make('no_control')
-                    ->numeric()
-                    ->required()
-                    ->default(0),
+                    
+                Select::make('no_control')
+                    ->label('No. de control')
+                    ->options([
+                        '1' => '1',
+                        '2' => '2',
+                        '3' => '3',
+                        '4' => '4',
+                    ]),
                 Forms\Components\DatePicker::make('fecha')
                     ->label('Fecha')
                     ->nullable(),
@@ -86,7 +92,24 @@ class ControlResource extends Resource
                     ->label('Otros')
                     ->rows(3)
                     ->maxLength(65535)
-                    ->nullable()
+                    ->nullable(),
+                Forms\Components\Toggle::make('seguimiento_completado')
+                    ->label('Seguimiento Completado')
+                    ->default(false),
+                Forms\Components\DatePicker::make('fecha_ultimo_seguimiento')
+                    ->label('Fecha Ultimo Seguimiento')
+                    ->nullable(),
+                Forms\Components\DatePicker::make('fecha_proximo_seguimiento')
+                    ->label('Fecha Proximo Seguimiento')
+                    ->nullable(),
+                Forms\Components\Textarea::make('observaciones_seguimiento')
+                    ->label('Observaciones Seguimiento')
+                    ->rows(3)
+                    ->maxLength(65535)
+                    ->nullable(),
+                Forms\Components\Toggle::make('necesita_seguimiento')
+                    ->label('Necesita Seguimiento')
+                    ->default(false),
             ]);
     }
 
@@ -95,11 +118,12 @@ class ControlResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->label('ID')->sortable()->searchable(),
-
-                Tables\Columns\IconColumn::make('no_control')
-                    ->label('No Control')
-                    ->boolean()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('antobs.id')
+                    ->label('Antecedente ID')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('no_control')
+                    ->label('No Control'),
                 Tables\Columns\TextColumn::make('fecha')
                     ->label('Fecha')
                     ->date()
@@ -108,77 +132,13 @@ class ControlResource extends Resource
                     ->label('Multiple')
                     ->boolean()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('rh')
-                    ->label('RH')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('hemorragia')
-                    ->label('Hemorragia')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('vih')
-                    ->label('VIH')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('precion')
-                    ->label('Presion')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('anemia')
-                    ->label('Anemia')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('desnutricion')
-                    ->label('Desnutricion')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('dolor')
-                    ->label('Dolor')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('sintomologia')
-                    ->label('Sintomologia')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('ictericia')
-                    ->label('Ictericia')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('diabetes')
-                    ->label('Diabetes')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('renal')
-                    ->label('Renal')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('corazon')
-                    ->label('Corazon')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('hipertencion')
-                    ->label('Hipertencion')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('drogras')
-                    ->label('Drogas')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('enfermedad')
-                    ->label('Enfermedad')
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('otros')
-                    ->label('Otros')
-                    ->limit(50)
-                    ->sortable()->searchable(),
-      
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

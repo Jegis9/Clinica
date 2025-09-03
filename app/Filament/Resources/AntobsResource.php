@@ -16,8 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class AntobsResource extends Resource
 {
     protected static ?string $model = Antobs::class;
+   
+    protected static ?string $navigationLabel = 'Antecedentes ';
+    protected static ?string $pluralModelLabel = 'Antecedentes Obstetricos';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     public static function form(Form $form): Form
     {
@@ -47,15 +51,10 @@ class AntobsResource extends Resource
     {
         return $table
             ->columns([
-            Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
-       
-            Tables\Columns\IconColumn::make('muerte')->label('Muerte fetal/neonatal')->boolean(),
-            Tables\Columns\IconColumn::make('abortos')->label('Abortos')->boolean(),
-            Tables\Columns\IconColumn::make('gestas')->label('Gestas')->boolean(),
-            Tables\Columns\IconColumn::make('peso_bajo')->label('Peso bajo')->boolean(),
-            Tables\Columns\IconColumn::make('pesoa')->label('Peso alto')->boolean(),
-            Tables\Columns\IconColumn::make('hipertencion')->label('Hipertensión')->boolean(),
-            Tables\Columns\IconColumn::make('cirujias')->label('Cirugías')->boolean(),
+            Tables\Columns\TextColumn::make('paciente.id')->label('ID')->sortable(),
+            Tables\Columns\TextColumn::make('paciente.nombre')->label('Nombre de paciente')->sortable(),
+            Tables\Columns\IconColumn::make('cirujias')->label('Cesarias previas')->boolean(),
+
         
             ])
             ->filters([
@@ -63,6 +62,7 @@ class AntobsResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

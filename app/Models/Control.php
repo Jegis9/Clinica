@@ -27,9 +27,20 @@ class Control extends Model
         'drogras',
         'enfermedad',
         'otros',
+        'necesita_seguimiento',
+        'seguimiento_completado',
+        'fecha_ultimo_seguimiento',
+        'fecha_proximo_seguimiento',
+        'observaciones_seguimiento'
+        
     ];
     public function antobs()
     {
         return $this->belongsTo(Antobs::class, 'antecedente_id');
     }
+    public function paciente()
+    {
+        return $this->belongsTo(Pacientes::class, 'paciente_id');
+    }
+
 }

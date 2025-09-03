@@ -17,7 +17,7 @@ class PacienteResource extends Resource
 {
     protected static ?string $model = Paciente::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {
@@ -133,35 +133,27 @@ class PacienteResource extends Resource
                 Tables\Columns\TextColumn::make('registro_no')->label('Registro')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('nombre')->label('Nombre')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('apellido')->label('Apellido')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('birth_date')->label('Nacimiento')->date()->sortable(),
-                Tables\Columns\TextColumn::make('pueblo')->label('Pueblo')->searchable(),
-                Tables\Columns\TextColumn::make('escolaridad')->label('Escolaridad')->searchable(),
-                Tables\Columns\TextColumn::make('ocupacion')->label('Ocupación')->searchable(),
-                Tables\Columns\TextColumn::make('nombre_esposo')->label('Nombre esposo')->searchable(),
-                Tables\Columns\TextColumn::make('pueblo_esposo')->label('Pueblo esposo')->searchable(),
-                Tables\Columns\TextColumn::make('escolaridad_esposo')->label('Escolaridad esposo')->searchable(),
-                Tables\Columns\TextColumn::make('ocupacion_esposo')->label('Ocupación esposo')->searchable(),
-                Tables\Columns\TextColumn::make('estado_civil')->label('Estado civil')->sortable(),
-                Tables\Columns\TextColumn::make('distancia_servicio_salud_km')->label('Distancia salud (km)'),
-                Tables\Columns\TextColumn::make('tiempo_servicio_salud_hrs')->label('Tiempo salud (hrs)'),
-                Tables\Columns\TextColumn::make('nombre_comunidad')->label('Comunidad')->searchable(),
                 Tables\Columns\TextColumn::make('telefono_emergencia')->label('Tel. emergencia'),
-                Tables\Columns\TextColumn::make('fecha_ultima_regla')->label('Última regla')->date(),
-                Tables\Columns\TextColumn::make('fpp')->label('FPP')->date(),
-                Tables\Columns\TextColumn::make('no_embarazos')->label('Embarazos'),
-                Tables\Columns\TextColumn::make('no_partos')->label('Partos'),
-                Tables\Columns\TextColumn::make('no_cesareas')->label('Cesáreas'),
-                Tables\Columns\TextColumn::make('no_abortos')->label('Abortos'),
-                Tables\Columns\TextColumn::make('no_hijos_vivos')->label('Hijos vivos'),
-                Tables\Columns\TextColumn::make('no_hijos_muertos')->label('Hijos muertos'),
+ 
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('Ver antecedestes')
+                    ->label('Ver antecedestes')
+            
+                    ->url(fn (Paciente $record) => 
+                        $record->antobs 
+                            ? AntobsResource::getUrl('edit', ['record' => $record->antobs->id]) // CORRECCIÓN: usar el ID de antobs, no paciente_id
+                            : AntobsResource::getUrl('create', ['paciente_id' => $record->id]) // Opcional: crear nuevo si no existe
+                    )
+                    ->openUrlInNewTab(false) // Opcional: abrir en la misma pestaña
+                    ->visible(fn (Paciente $record) => $record->antobs !== null)
 
-            ])
+                ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -175,7 +167,10 @@ class PacienteResource extends Resource
             //
         ];
     }
-
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with('antobs'); // Cargar la relación eager loading
+    }
     public static function getPages(): array
     {
         return [

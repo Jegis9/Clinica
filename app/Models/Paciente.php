@@ -32,5 +32,10 @@ class Paciente extends Model
         'no_cesareas',
         'no_abortos',
     ];
+
+   public function antobs()
+    {
+        return $this->hasOne(Antobs::class, 'paciente_id', 'id');
+    }
     
 }
