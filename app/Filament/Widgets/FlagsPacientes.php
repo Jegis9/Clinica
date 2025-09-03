@@ -5,6 +5,7 @@ namespace App\Filament\Widgets;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use App\Filament\Resources\ControlResource;
 
 class FlagsPacientes extends BaseWidget
 {
@@ -96,6 +97,19 @@ class FlagsPacientes extends BaseWidget
               
 
             ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('Ver Control')
+
+    ->label('Editar Control')
+    ->url(fn ($record) => ControlResource::getUrl('edit', ['record' => $record->id]))
+    ->openUrlInNewTab(false)
+    ->visible(fn ($record) => $record->control === 1) // Solo mostrar si tiene control activo
+    ->color('primary')
+    ->icon('heroicon-o-pencil')
+
+                ])
             ->filters([
                 \Filament\Tables\Filters\SelectFilter::make('estado_seguimiento')
                     ->label('Estado de Seguimiento')
