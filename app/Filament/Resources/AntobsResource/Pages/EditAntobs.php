@@ -14,22 +14,21 @@ class EditAntobs extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
-       Actions\Action::make('llenar_control')
-            ->label('Llenar Control')
-            ->icon('heroicon-o-clipboard-document-list')
-            ->color('success')
-            ->requiresConfirmation()
-            ->modalHeading('Llenar Control Prenatal')
-            ->modalDescription('¿Deseas proceder a llenar el control prenatal para este paciente?')
-            ->modalSubmitActionLabel('Continuar')
-            ->action(function () {
+            // Actions\Action::make('llenar_control')
+            // ->label('Llenar Control')
+            // ->icon('heroicon-o-clipboard-document-list')
+            // ->color('success')
+            // ->requiresConfirmation()
+            // ->modalHeading('Llenar Control Prenatal')
+            // ->modalDescription('¿Deseas proceder a llenar el control prenatal para este paciente?')
+            // ->modalSubmitActionLabel('Continuar')
+            // ->action(function () {
   
                     
-                return redirect(ControlResource::getUrl('create', [
-                    'antecedente_id' => $this->record->id
-                ]));
-            }),
+            //     return redirect(ControlResource::getUrl('create', [
+            //         'antecedente_id' => $this->record->id
+            //     ]));
+            // }),
         ];
     }
 }

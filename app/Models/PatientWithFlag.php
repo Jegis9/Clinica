@@ -14,5 +14,9 @@ class PatientWithFlag extends Model
     public $incrementing = false; // porque no es autoincremental
     public $timestamps = false;
 
+public function historicos()
+{
+    return $this->hasMany(Historico::class, 'antecedente_id', 'antecedente_id');
+}
 
 }

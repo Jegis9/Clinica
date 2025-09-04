@@ -18,7 +18,7 @@ class EditControl extends EditRecord
 
         ];
     }
-        protected function getSteps(): array
+    protected function getSteps(): array
     {
         return [
             \Filament\Forms\Components\Wizard\Step::make('Editar datos de control')
@@ -26,10 +26,15 @@ class EditControl extends EditRecord
                     \Filament\Forms\Components\Select::make('no_control')
                         ->label('No. de control')
                         ->options([
-                            '1' => '1',
-                            '2' => '2',
-                            '3' => '3',
-                            '4' => '4',
+                        '1' => '1',
+                        '2' => '2',
+                        '3' => '3', 
+                        '4' => '4',
+                        '5' => '5',
+                        '6' => '6',
+                        '7' => '7',
+                        '8' => '8',
+                        '9' => '9',
                         ]),
                     \Filament\Forms\Components\DatePicker::make('fecha')
                         ->label('Fecha')
@@ -109,6 +114,10 @@ class EditControl extends EditRecord
                         ->default(false),
                 ]),
         ];
+    }
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 
 }

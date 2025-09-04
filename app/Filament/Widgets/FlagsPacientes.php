@@ -6,7 +6,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 use App\Filament\Resources\ControlResource;
-
+use App\Models\Historico;
 class FlagsPacientes extends BaseWidget
 {
 
@@ -26,6 +26,7 @@ class FlagsPacientes extends BaseWidget
                 )
             ->columns([
                 Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
+      
                 Tables\Columns\TextColumn::make('nombre')->label('Nombre')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('apellido')->label('Apellido')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('telefono_emergencia')->label('Telefono de emergencia')->sortable(),
@@ -98,16 +99,21 @@ class FlagsPacientes extends BaseWidget
 
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\Action::make('Ver Control')
+           
+                Tables\Actions\ViewAction::make()
+                ->modalHeading(fn ($record) => "Historial del Antecedente #{$record->antecedente_id}")
+                ->modalContent(fn ($record) => view('filament.tables.historial-table', [
+                    'historicos' => \App\Models\Historico::where('antecedente_id', $record->antecedente_id)->get()
+                ])),
 
-    ->label('Editar Control')
-    ->url(fn ($record) => ControlResource::getUrl('edit', ['record' => $record->id]))
-    ->openUrlInNewTab(false)
-    ->visible(fn ($record) => $record->control === 1) // Solo mostrar si tiene control activo
-    ->color('primary')
-    ->icon('heroicon-o-pencil')
+
+                Tables\Actions\Action::make('editar_control')
+                ->label('Editar Control')
+                ->url(fn ($record) => ControlResource::getUrl('edit', ['record' => $record->control_id]))
+                ->openUrlInNewTab(false)
+                ->visible(fn ($record) => $record->control === 1 && $record->control_id !== null)
+                ->color('primary')
+                ->icon('heroicon-o-pencil')
 
                 ])
             ->filters([
@@ -115,7 +121,7 @@ class FlagsPacientes extends BaseWidget
                     ->label('Estado de Seguimiento')
                     ->options([
                         'Atrasado' => 'Atrasado',
-                        'Programado' => 'Programado',
+                        'Porgramado' => 'Programado',
                     ])
                     ->default(null) // Ninguno seleccionado por defecto
                     ->placeholder('Todos los registros'),

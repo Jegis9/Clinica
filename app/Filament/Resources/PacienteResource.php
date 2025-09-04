@@ -12,7 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\Response;
 class PacienteResource extends Resource
 {
     protected static ?string $model = Paciente::class;
@@ -139,6 +141,28 @@ class PacienteResource extends Resource
             ->filters([
                 //
             ])
+        ->headerActions([
+            Action::make('descargarPDFCompleto')
+                ->label('Descargar PDF')
+        
+                ->color('danger')
+                ->action(function () {
+                    $pacientes = \App\Models\Paciente::all();
+                    
+                    // Configurar PDF en horizontal (landscape)
+                    $pdf = Pdf::loadView('pdf.pacientes-completo', [
+                        'pacientes' => $pacientes,
+                        'fecha' => now()->format('d/m/Y H:i')
+                    ])->setPaper('a4', 'landscape'); // ← Aquí configuras horizontal
+                    
+                    return Response::streamDownload(
+                        function () use ($pdf) {
+                            echo $pdf->stream();
+                        },
+                        'pacientes-horizontal-' . now()->format('Y-m-d') . '.pdf'
+                    );
+                })
+        ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
