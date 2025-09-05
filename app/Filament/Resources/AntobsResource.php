@@ -77,7 +77,10 @@ class AntobsResource extends Resource
             //
         ];
     }
-
+    public static function getNavigationSort(): int
+    {
+        return 3; // Primera posición
+    }
     public static function getPages(): array
     {
         return [

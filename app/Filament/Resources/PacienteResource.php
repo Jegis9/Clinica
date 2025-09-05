@@ -223,6 +223,10 @@ class PacienteResource extends Resource
             //
         ];
     }
+    public static function getNavigationSort(): int
+    {
+        return 1; // Primera posición
+    }
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->with('antobs'); // Cargar la relación eager loading

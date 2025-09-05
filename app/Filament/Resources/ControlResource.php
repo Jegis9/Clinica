@@ -159,7 +159,10 @@ class ControlResource extends Resource
             //
         ];
     }
-
+    public static function getNavigationSort(): int
+    {
+        return 2; // Primera posición
+    }
     public static function getPages(): array
     {
         return [
