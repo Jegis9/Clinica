@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PacienteResource\Pages;
 use App\Filament\Resources\PacienteResource\RelationManagers;
 use App\Models\Paciente;
+use App\Models\Ficha;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
 class PacienteResource extends Resource
 {
     protected static ?string $model = Paciente::class;
@@ -175,7 +177,37 @@ class PacienteResource extends Resource
                             : AntobsResource::getUrl('create', ['paciente_id' => $record->id]) // Opcional: crear nuevo si no existe
                     )
                     ->openUrlInNewTab(false) // Opcional: abrir en la misma pestaña
-                    ->visible(fn (Paciente $record) => $record->antobs !== null)
+                    ->visible(fn (Paciente $record) => $record->antobs !== null),
+                
+
+                Tables\Actions\Action::make('descargarHistorialCompleto')
+                ->label('Historial Completo')
+                ->icon('heroicon-o-document-text')
+                ->color('info')
+                ->action(function ($record) {
+                    // Consulta directa a la vista ficha
+                    $datos = DB::table('ficha')
+                        ->where('paciente_id', $record->id)
+                        ->orderBy('fecha', 'DESC')
+                        ->get();
+                    
+                    // Tomar el primer registro para datos únicos
+                    $datosUnicos = $datos->first();
+                    $historicos = $datos;
+                    
+                    $pdf = Pdf::loadView('pdf.pacientes-ficha', [
+                        'datosPaciente' => $datosUnicos,
+                        'historicos' => $historicos,
+                        'fecha' => now()->format('d/m/Y H:i')
+                    ])->setPaper('a4', 'portrait');
+                    
+                    return Response::streamDownload(
+                        function () use ($pdf) {
+                            echo $pdf->stream();
+                        },
+                        'pacientes-ficha-' . $record->id . '-' . now()->format('Y-m-d') . '.pdf'
+                    );
+                })
 
                 ])
             ->bulkActions([

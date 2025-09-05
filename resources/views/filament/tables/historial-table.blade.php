@@ -1,13 +1,39 @@
+
+
+
+
 <div class="p-6 space-y-6 bg-white rounded-lg shadow">
-    @foreach($historicos as $historico)
+    @php
+        use Carbon\Carbon;
+
+        // Agrupar por mes y año
+        $historicosPorMes = collect($historicos)->groupBy(function($item) {
+            return Carbon::parse($item['fecha'])->format('Y-m'); // agrupamos por año-mes
+        });
+    @endphp
+
+    @forelse($historicosPorMes as $mes => $registros)
         @php
-            // Convertir fechas desde string si es necesario
-            $fecha = isset($historico['fecha']) ? \Carbon\Carbon::parse($historico['fecha']) : null;
-            $fechaUltimoSeguimiento = isset($historico['fecha_ultimo_seguimiento']) ? \Carbon\Carbon::parse($historico['fecha_ultimo_seguimiento']) : null;
-            $fechaProximoSeguimiento = isset($historico['fecha_proximo_seguimiento']) ? \Carbon\Carbon::parse($historico['fecha_proximo_seguimiento']) : null;
+            $mesCarbon = Carbon::createFromFormat('Y-m', $mes);
         @endphp
-        
-        <div class="p-4 mb-6 border border-gray-200 rounded-lg shadow-sm">
+
+        <!-- Encabezado del mes -->
+        <h2 class="text-xl font-bold text-gray-900 border-b pb-2 mb-4">
+            {{ $mesCarbon->translatedFormat('F Y') }}
+        </h2>
+
+        @foreach($registros as $historico)
+            @php
+                $fecha = isset($historico['fecha']) ? Carbon::parse($historico['fecha']) : null;
+                $fechaUltimoSeguimiento = isset($historico['fecha_ultimo_seguimiento']) ? Carbon::parse($historico['fecha_ultimo_seguimiento']) : null;
+                $fechaProximoSeguimiento = isset($historico['fecha_proximo_seguimiento']) ? Carbon::parse($historico['fecha_proximo_seguimiento']) : null;
+            @endphp
+
+            <div class="p-4 mb-6 border border-gray-200 rounded-lg shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
+                    Registro #{{ $loop->iteration }} - {{ $fecha ? $fecha->format('d/m/Y') : 'Sin fecha' }}
+                </h3>
+                    <div class="p-4 mb-6 border border-gray-200 rounded-lg shadow-sm">
             <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
                 Registro #{{ $loop->iteration }} - {{ $fecha ? $fecha->format('d/m/Y') : 'Sin fecha' }}
             </h3>
@@ -167,13 +193,11 @@
                 @endif
             </div>
         </div>
-        
-    @endforeach
-    
-    @if(empty($historicos))
+                  </div>
+        @endforeach
+    @empty
         <div class="text-center py-12 text-gray-500">
             No hay registros históricos para este antecedente.
         </div>
-    @endif
+    @endforelse
 </div>
-

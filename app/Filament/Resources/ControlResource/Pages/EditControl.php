@@ -22,49 +22,46 @@ class EditControl extends EditRecord
     {
         return [
             \Filament\Forms\Components\Wizard\Step::make('Editar datos de control')
-                ->schema([
+              ->schema([
+        \Filament\Forms\Components\Hidden::make('antecedente_id')
+            ->default(fn () => request()->get('antecedente_id')),
                     \Filament\Forms\Components\Select::make('no_control')
                         ->label('No. de control')
                         ->options([
-                        '1' => '1',
-                        '2' => '2',
-                        '3' => '3', 
-                        '4' => '4',
-                        '5' => '5',
-                        '6' => '6',
-                        '7' => '7',
-                        '8' => '8',
-                        '9' => '9',
+                            '1' => '1',
+                            '2' => '2',
+                            '3' => '3',
+                            '4' => '4',
                         ]),
                     \Filament\Forms\Components\DatePicker::make('fecha')
                         ->label('Fecha')
                         ->nullable(),
                     \Filament\Forms\Components\Toggle::make('multiple')
-                        ->label('Multiple')
+                        ->label('Sospecha de Embarazo Multiple')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('rh')
-                        ->label('RH')
+                        ->label('Paciente Rh -')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('hemorragia')
-                        ->label('Hemorragia')
+                        ->label('Hemorrragia vaginal')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('vih')
-                        ->label('VIH')
+                        ->label('VIH positivo')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('precion')
-                        ->label('Presion')
+                        ->label('Presion arterial diastoclica de 90')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('anemia')
-                        ->label('Anemia')
+                        ->label('Anemia clinica')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('desnutricion')
-                        ->label('Desnutricion')
+                        ->label('Desnutricion u obesidad')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('dolor')
-                        ->label('Dolor')
+                        ->label('Dolor adominal')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('sintomologia')
-                        ->label('Sintomologia')
+                        ->label('Sintomologia orinaria')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('ictericia')
                         ->label('Ictericia')
@@ -73,25 +70,26 @@ class EditControl extends EditRecord
                         ->label('Diabetes')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('renal')
-                        ->label('Renal')
+                        ->label('Enfermedad renal')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('corazon')
-                        ->label('Corazon')
+                        ->label('Enfermedad del corazon')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('hipertencion')
-                        ->label('Hipertencion')
+                        ->label('Hipertencion arterial')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('drogras')
-                        ->label('Drogas')
+                        ->label('Consumo de drogas')
                         ->default(false),
                     \Filament\Forms\Components\Toggle::make('enfermedad')
-                        ->label('Enfermedad')
+                        ->label('Otra enfermedad')
                         ->default(false),
                     \Filament\Forms\Components\Textarea::make('otros')
-                        ->label('Otros')
+                        ->label('Especifique')
                         ->rows(3)
                         ->maxLength(65535)
                         ->nullable(),
+               
                 ]),
             \Filament\Forms\Components\Wizard\Step::make('Editar seguimiento')
                 ->schema([
