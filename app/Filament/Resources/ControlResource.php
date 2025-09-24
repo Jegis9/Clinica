@@ -30,7 +30,7 @@ class ControlResource extends Resource
                     ->required(),
                     
                 Select::make('no_control')
-                    ->label('No. de control')
+                    ->label('No. de mes')
                     ->options([
                         '1' => '2',
                         '2' => '2',

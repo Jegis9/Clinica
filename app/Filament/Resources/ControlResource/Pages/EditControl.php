@@ -26,12 +26,17 @@ class EditControl extends EditRecord
         \Filament\Forms\Components\Hidden::make('antecedente_id')
             ->default(fn () => request()->get('antecedente_id')),
                     \Filament\Forms\Components\Select::make('no_control')
-                        ->label('No. de control')
+                        ->label('No. de mes')
                         ->options([
                             '1' => '1',
                             '2' => '2',
                             '3' => '3',
                             '4' => '4',
+                            '5' => '5',
+                            '6' => '6',
+                            '7' => '7',
+                            '8' => '8',
+                            '9' => '9',
                         ]),
                     \Filament\Forms\Components\DatePicker::make('fecha')
                         ->label('Fecha')

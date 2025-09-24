@@ -20,12 +20,17 @@ class CreateControl extends CreateRecord
         \Filament\Forms\Components\Hidden::make('antecedente_id')
             ->default(fn () => request()->get('antecedente_id')),
                     \Filament\Forms\Components\Select::make('no_control')
-                        ->label('No. de control')
+                        ->label('No. de mes')
                         ->options([
                             '1' => '1',
                             '2' => '2',
                             '3' => '3',
                             '4' => '4',
+                            '5' => '5',
+                            '6' => '6',
+                            '7' => '7',
+                            '8' => '8',
+                            '9' => '9',
                         ]),
                     \Filament\Forms\Components\DatePicker::make('fecha')
                         ->label('Fecha')
@@ -86,9 +91,7 @@ class CreateControl extends CreateRecord
                 ]),
             \Filament\Forms\Components\Wizard\Step::make('Editar seguimiento')
                 ->schema([
-                    \Filament\Forms\Components\Toggle::make('seguimiento_completado')
-                        ->label('Seguimiento Completado')
-                        ->default(false),
+
                     \Filament\Forms\Components\DatePicker::make('fecha_ultimo_seguimiento')
                         ->label('Fecha Ultimo Seguimiento')
                         ->nullable(),
@@ -100,9 +103,26 @@ class CreateControl extends CreateRecord
                         ->rows(3)
                         ->maxLength(65535)
                         ->nullable(),
-                    \Filament\Forms\Components\Toggle::make('necesita_seguimiento')
-                        ->label('Necesita Seguimiento')
-                        ->default(false),
+            \Filament\Forms\Components\Toggle::make('necesita_seguimiento')
+                ->label('Necesita Seguimiento')
+                ->default(false)
+                ->live()
+                ->afterStateUpdated(function ($state, callable $set) {
+                    if ($state) {
+                        $set('seguimiento_completado', false);
+                    }
+                }),
+
+            \Filament\Forms\Components\Toggle::make('seguimiento_completado')
+                ->label('Seguimiento Completado')
+                ->default(false)
+                ->live()
+                ->afterStateUpdated(function ($state, callable $set) {
+                    if ($state) {
+                        $set('necesita_seguimiento', false);
+                    }
+                }),
+
                 ]),
         ];
     }

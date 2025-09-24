@@ -104,6 +104,11 @@
             <div class="data-field"><strong>Registro No:</strong> {{ $datosPaciente->registro_no ?? 'N/A' }}</div>
             <div class="data-field"><strong>Nombre:</strong> {{ $datosPaciente->nombre }} {{ $datosPaciente->apellido }}</div>
             <div class="data-field"><strong>Fecha Nacimiento:</strong> {{ $datosPaciente->birth_date ?? 'N/A' }}</div>
+                        <!-- Cálculo de edad si birth_date está disponible -->
+            <div class="data-field">
+            <strong>Edad:</strong> {{ \Carbon\Carbon::parse($datosPaciente->birth_date)->age }} años
+            </div>
+            
             <div class="data-field"><strong>Pueblo:</strong> {{ $datosPaciente->pueblo ?? 'N/A' }}</div>
             <div class="data-field"><strong>Escolaridad:</strong> {{ $datosPaciente->escolaridad ?? 'N/A' }}</div>
             <div class="data-field"><strong>Ocupación:</strong> {{ $datosPaciente->ocupacion ?? 'N/A' }}</div>
@@ -122,6 +127,11 @@
             <div class="data-field"><strong>Pueblo:</strong> {{ $datosPaciente->pueblo_esposo ?? 'N/A' }}</div>
             <div class="data-field"><strong>Escolaridad:</strong> {{ $datosPaciente->escolaridad_esposo ?? 'N/A' }}</div>
             <div class="data-field"><strong>Ocupación:</strong> {{ $datosPaciente->ocupacion_esposo ?? 'N/A' }}</div>
+            
+
+
+
+
         </div>
        @endif
 
