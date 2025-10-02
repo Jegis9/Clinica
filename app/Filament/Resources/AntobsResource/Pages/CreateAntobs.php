@@ -19,4 +19,14 @@ class CreateAntobs extends CreateRecord
         ]);
     }
 
+
+    // ELIMINAR EL BOTON CREAR OTRO
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getCreateFormAction(),
+            // $this->getCreateAnotherFormAction(), // Comentamos o eliminamos esta línea
+        ];
+    }
+
 }

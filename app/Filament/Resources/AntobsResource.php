@@ -81,6 +81,8 @@ class AntobsResource extends Resource
     {
         return 3; // Primera posición
     }
+
+
     public static function getPages(): array
     {
         return [

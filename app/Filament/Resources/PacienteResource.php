@@ -168,20 +168,21 @@ class PacienteResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\Action::make('Ver antecedestes')
-                    ->label('Ver antecedestes')
+
+                // Tables\Actions\Action::make('Ver antecedestes')
+                //     ->label('Ver antecedestes')
             
-                    ->url(fn (Paciente $record) => 
-                        $record->antobs 
-                            ? AntobsResource::getUrl('edit', ['record' => $record->antobs->id]) // CORRECCIÓN: usar el ID de antobs, no paciente_id
-                            : AntobsResource::getUrl('create', ['paciente_id' => $record->id]) // Opcional: crear nuevo si no existe
-                    )
-                    ->openUrlInNewTab(false) // Opcional: abrir en la misma pestaña
-                    ->visible(fn (Paciente $record) => $record->antobs !== null),
+                //     ->url(fn (Paciente $record) => 
+                //         $record->antobs 
+                //             ? AntobsResource::getUrl('edit', ['record' => $record->antobs->id]) // CORRECCIÓN: usar el ID de antobs, no paciente_id
+                //             : AntobsResource::getUrl('create', ['paciente_id' => $record->id]) // Opcional: crear nuevo si no existe
+                //     )
+                //     ->openUrlInNewTab(false) // Opcional: abrir en la misma pestaña
+                //     ->visible(fn (Paciente $record) => $record->antobs !== null),
                 
 
                 Tables\Actions\Action::make('descargarHistorialCompleto')
-                ->label('Historial Completo')
+                ->label('Historial')
                 ->icon('heroicon-o-document-text')
                 ->color('info')
                 ->action(function ($record) {

@@ -25,8 +25,12 @@ class Menores extends BaseWidget
                 Tables\Columns\TextColumn::make('apellido')->label('Apellido')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('birth_date')->label('Fecha de Nacimiento')->sortable()->date(),
                 Tables\Columns\TextColumn::make('edad')->label('Edad')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('fecha_ultima_regla')->label('Fecha de ultima regla')->sortable()->date(),
+                Tables\Columns\TextColumn::make('fpp')->label('Fecha FPP')->sortable()->date(),
+                Tables\Columns\TextColumn::make('diferencia_dias')->label('Diferencia dias')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('diferencia_semanas')->label('Diferencia semanas')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('diferencia_meses')->label('Diferencia meses')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('escolaridad')->label('escolaridad')->sortable()->searchable(),
-
                 Tables\Columns\TextColumn::make('ocupacion')->label('Ciudad')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('telefono_emergencia')->label('telefono')->sortable()->searchable(),
 

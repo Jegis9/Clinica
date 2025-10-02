@@ -22,8 +22,11 @@ class UltimoTrim extends BaseWidget
                 Tables\Columns\TextColumn::make('nombre')->label('Nombre'),
                 Tables\Columns\TextColumn::make('apellido')->label('Apellido'),
                 Tables\Columns\TextColumn::make('telefono_emergencia')->label('Teléfono'),
-                Tables\Columns\TextColumn::make('no_control')->label('Mes de control'),
-     
+                Tables\Columns\TextColumn::make('dias_gestacion')->label('Dias de gestación'),
+                Tables\Columns\TextColumn::make('semanas_gestacion')->label('Semanas de gestación'),
+                Tables\Columns\TextColumn::make('dias_restantes_fpp')->label('Dias restantes FPP'),
+                Tables\Columns\TextColumn::make('semanas_restantes_fpp')->label('Semanas restantes FPP'),
+       
             ]);
     }
 }

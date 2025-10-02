@@ -94,7 +94,9 @@ class FlagsPacientes extends BaseWidget
                 })
                 ->html(),
                 Tables\Columns\TextColumn::make('fecha_proximo_seguimiento')->label('Próxima fecha de seguimiento')->date()->sortable(),
-          
+                Tables\Columns\TextColumn::make('diferencia_dias')->label('Diferencia en dias')->sortable(),
+                Tables\Columns\TextColumn::make('diferencia_semanas')->label('Diferencia en semanas')->sortable(),  
+                Tables\Columns\TextColumn::make('diferencia_meses')->label('Diferencia en meses')->sortable(),       
               
 
             ])
