@@ -128,6 +128,14 @@ class ControlResource extends Resource
                     ->label('Antecedente ID')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('antobs.paciente.nombre')
+                    ->label('Nombre')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('antobs.paciente.apellido')
+                    ->label('Nombre')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('no_control')
                     ->label('No Control'),
                 Tables\Columns\TextColumn::make('fecha')
