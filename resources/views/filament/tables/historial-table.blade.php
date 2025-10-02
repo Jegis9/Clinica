@@ -33,10 +33,7 @@
                 <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
                     Registro #{{ $loop->iteration }} - {{ $fecha ? $fecha->format('d/m/Y') : 'Sin fecha' }}
                 </h3>
-                    <div class="p-4 mb-6 border border-gray-200 rounded-lg shadow-sm">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
-                Registro #{{ $loop->iteration }} - {{ $fecha ? $fecha->format('d/m/Y') : 'Sin fecha' }}
-            </h3>
+
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Información básica -->
@@ -46,6 +43,12 @@
                         <p class="text-sm"><span class="font-medium text-gray-600">Control ID:</span> {{ $historico['control_id'] ?? 'N/A' }}</p>
                         <p class="text-sm"><span class="font-medium text-gray-600">No. Control:</span> {{ $historico['no_control'] ?? 'N/A' }}</p>
                         <p class="text-sm"><span class="font-medium text-gray-600">Fecha:</span> {{ $fecha ? $fecha->format('d/m/Y') : 'N/A' }}</p>
+                       <p class="text-sm"><span class="font-medium text-gray-600">Dias de gestacion:</span> {{ $historico ['dias_gestacion'] ?? 'N/A'}}</p>
+                       <p class="text-sm"><span class="font-medium text-gray-600">Semanas de gestacion:</span> {{ $historico ['semanas_gestacion'] ?? 'N/A' }}</p>
+                       <p class="text-sm"><span class="font-medium text-gray-600">Meses de gestacion:</span> {{ $historico ['meses_gestacion'] ?? 'N/A' }}</p>
+                       <p class="text-sm"><span class="font-medium text-gray-600">Dias restantes:</span> {{ $historico ['dias_restantes_fpp'] ?? 'N/A' }}</p>
+                       <p class="text-sm"><span class="font-medium text-gray-600">Semanas restantes:</span> {{ $historico ['semanas_restantes_fpp'] ?? 'N/A'}}</p>
+
                     </div>
                 </div>
 

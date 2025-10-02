@@ -36,7 +36,7 @@ class FlagsPacientes extends BaseWidget
                     ->formatStateUsing(function ($state) {
                         if ($state == 'Atrasado') {
                             return '<span class="text-danger-600 font-bold">⏰ Atrasado</span>';
-                        } elseif ($state == 'Porgramado') {
+                        } elseif ($state == 'Programado') {
                             return '<span class="text-success-600 font-bold">✅ Programado</span>';
                         } else {
                             return $state; // Para cualquier otro estado
